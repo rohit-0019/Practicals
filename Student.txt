@@ -1,0 +1,38 @@
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract StudentData{
+    struct Student{
+        uint rollNo;
+        uint age;
+        string name;
+        uint marks;
+        
+    }
+
+    Student[] public students;
+
+    //Add Student
+    function addStudent( uint _rollNo, uint _age, string memory _name, uint _marks)public{
+        students.push(Student(_rollNo,_age,_name,_marks));
+    }
+
+    //Get Student
+    function getStudent(uint index)public view returns(uint, string memory, uint){
+        require (index<students.length,"Invalid ID");
+        Student memory s = students[index];
+        return (s.rollNo,s.name, s.marks);
+    }
+
+    //Get Student Count
+    function getCount()public view returns(uint) {
+        return students.length;
+    }
+
+    fallback() external payable {
+        require(msg.value>0,"Ether must be greater than 0");
+    }
+    // receive() external payable {
+    // require(msg.value > 0, "Ether must be greater than 0");
+
+}
